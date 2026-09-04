@@ -1,13 +1,12 @@
 import tabulate
 import pandas as pd
-from predict_ur_score.utils import load_data
 from predict_ur_score.exceptions import *
 
 
 class stats:
     '''A class to calculate statistics for student scores.'''
 
-    topics = ['math_score', 'history_score', 'physics_score', 'chemistry_score', 'biology_score', 'english_score',
+    topics: list = ['math_score', 'history_score', 'physics_score', 'chemistry_score', 'biology_score', 'english_score',
               'geography_score']
 
     def __init__(self, dataframe: pd.DataFrame):
@@ -19,17 +18,17 @@ class stats:
         except Exception as e:
             raise PredictorInvalidData(f"Error occurred while calculating all statistics: {e}")
 
-    def each_stat(self, column_name: str) -> pd.DataFrame:
+    def each_stat(self, column_name: str) -> pd.Series:
         try:
             return self._dataframe[column_name].describe().drop(['count'])
         except Exception as e:
             raise PredictorInvalidTopic(f"Invalid topic: {column_name}.")
 
-    def table_format(self, column_name: str = None, all_stats: bool = True):
+    def table_format(self, column_name: str = None, all_stats: bool = True) -> str:
         if all_stats:
-            series = self.all_stats()
+            series: pd.DataFrame = self.all_stats()
         else:
-            series = self.each_stat(column_name).to_frame()
+            series: pd.DataFrame = self.each_stat(column_name).to_frame()
 
         return tabulate.tabulate(series, headers='keys', tablefmt='psql', numalign='center', floatfmt='.2f')
 
@@ -38,7 +37,7 @@ class stats:
         return self._dataframe
 
     @dataframe.setter
-    def dataframe(self, value):
+    def dataframe(self, value: pd.DataFrame):
         if not isinstance(value, pd.DataFrame):
             raise PredictorInvalidInput("Input must be a pandas DataFrame.")
         self._dataframe = value
