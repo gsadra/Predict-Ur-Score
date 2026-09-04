@@ -1,0 +1,34 @@
+[project]
+name = "predict-ur-score"
+version = "0.1.0"
+description = "Answer some questions to get your probable scores based on your answers!"
+readme = "README.md"
+authors = [
+    { name = "gsadra", email = "sadra.gholami2003@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "joblib>=1.6.0",
+    "matplotlib>=3.11.1",
+    "numpy>=2.5.2",
+    "pandas>=3.0.5",
+    "pathlib>=1.0.1",
+    "scikit-learn>=1.9.0",
+    "scipy>=1.18.1",
+    "seaborn>=0.13.2",
+    "tabulate>=0.10.0",
+]
+
+[project.scripts]
+predict-ur-score = "predict_ur_score:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "mypy>=2.3.1",
+    "pytest>=9.1.1",
+    "ruff>=0.16.5",
+]
