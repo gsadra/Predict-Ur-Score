@@ -1,17 +1,18 @@
 import tabulate
 import pandas as pd
 from predict_ur_score.exceptions import *
+from predict_ur_score.utils import load_data
 
 
 class stats:
     '''A class to calculate statistics for student scores.'''
 
-    topics: list = ['math_score', 'history_score', 'physics_score', 'chemistry_score', 'biology_score', 'english_score',
+    TOPICS: list = ['math_score', 'history_score', 'physics_score', 'chemistry_score', 'biology_score', 'english_score',
               'geography_score']
 
-    def __init__(self, dataframe: pd.DataFrame):
-        self._dataframe = dataframe
-
+    def __init__(self, dataframe: pd.DataFrame = None) -> None:
+        self._dataframe = load_data() if dataframe is None else dataframe
+        
     def all_stats(self) -> pd.DataFrame:
         try:
             return self._dataframe.describe().drop(['count'])

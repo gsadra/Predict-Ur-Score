@@ -17,10 +17,14 @@ class PredictorInvalidData(PredictorBaseException):
     '''Raises when an Invalid date is being used'''
     ...
 
-class PredictorFileNotFound(FileNotFoundError):
+class PredictorFileNotFound(PredictorBaseException):
     '''Raises when a file is not found'''
     ...
 
 class PredictorInvalidTopic(PredictorBaseException):
     '''Raises when an invalid topic is being used'''
+    ...
+
+class PredictorInvalidModel(PredictorBaseException):
+    '''Raises when an invalid model is being used'''
     ...
