@@ -7,5 +7,6 @@ __all__ = [
     'PredictorInvalidData',
     'PredictorFileNotFound',
     'PredictorInvalidTopic',
-    'PredictorInvalidModel'
+    'PredictorInvalidModel',
+    'PredictorMissingFeatures'
 ]

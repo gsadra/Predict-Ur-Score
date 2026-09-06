@@ -28,3 +28,7 @@ class PredictorInvalidTopic(PredictorBaseException):
 class PredictorInvalidModel(PredictorBaseException):
     '''Raises when an invalid model is being used'''
     ...
+
+class PredictorMissingFeatures(PredictorBaseException):
+    '''Raises when featurs of the model is missing.'''
+    ...

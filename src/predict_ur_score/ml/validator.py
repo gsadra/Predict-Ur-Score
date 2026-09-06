@@ -11,6 +11,7 @@ from .pipeline import (
 from sklearn.model_selection import train_test_split
 from predict_ur_score.utils import load_data
 from .constants import TARGETS
+from predict_ur_score.config import RANDOM_STATE
 
 @dataclass
 class ModelSearch():
@@ -55,7 +56,7 @@ class ModelValidation:
     }
 
     def __init__(self, n_splits: int = 5,
-                 random_state: int = 42,
+                 random_state: int = RANDOM_STATE,
                  n_iter: int = 50
     ) -> None:
         self.cv = KFold(n_splits=n_splits, shuffle=True, random_state=random_state)
@@ -102,17 +103,17 @@ def find_best_model_validation():
     X = data.drop(columns=TARGETS)
     y = data[TARGETS]
 
-    x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=RANDOM_STATE)
 
     validator = ModelValidation()
     results = validator.tune_all_models(x_train, y_train)
     best_model = validator.get_best_model(results)
 
-    print(f"Model: {best_model.model_name}")
-    print(f"CV RMSE: {best_model.best_rmse:.4f}")
-    print(f"Best parameters: {best_model.best_params}")
+    print(f'Model: {best_model.model_name}')
+    print(f'CV RMSE: {best_model.best_rmse:.4f}')
+    print(f'Best parameters: {best_model.best_params}')
     y_pred = best_model.best_estimator.predict(x_test)
-    print("\nPrediction shape:") 
+    print('\nPrediction shape:') 
     print(y_pred.shape)
 
 if __name__ == '__main__':

@@ -11,6 +11,7 @@ from .pipeline import (
 from predict_ur_score.exceptions import PredictorInvalidModel
 from predict_ur_score.utils import load_data
 from .constants import TARGETS, BEST_MODEL_PARAMS
+from predict_ur_score.config import BEST_MODEL_PATH
 
 
 class ModelTrainer:
@@ -23,7 +24,7 @@ class ModelTrainer:
         'linear_regression': LinearRegressionPipeline
     }
 
-    def __init__(self, model_type: str = 'random_forest', model_path: Path = Path('models/best_model.joblib')) -> None:
+    def __init__(self, model_type: str = 'random_forest', model_path: Path = BEST_MODEL_PATH) -> None:
         self.data = load_data()
         self.model_type: str = model_type
         self.model_path: Path | None = model_path

@@ -1,10 +1,10 @@
-import tabulate
+from tabulate import tabulate
 import pandas as pd
 from predict_ur_score.exceptions import *
 from predict_ur_score.utils import load_data
 
 
-class stats:
+class Stats:
     '''A class to calculate statistics for student scores.'''
 
     TOPICS: list = ['math_score', 'history_score', 'physics_score', 'chemistry_score', 'biology_score', 'english_score',
@@ -31,7 +31,7 @@ class stats:
         else:
             series: pd.DataFrame = self.each_stat(column_name).to_frame()
 
-        return tabulate.tabulate(series, headers='keys', tablefmt='psql', numalign='center', floatfmt='.2f')
+        return tabulate(series, headers='keys', tablefmt='psql', numalign='center', floatfmt='.2f')
 
     @property
     def dataframe(self) -> pd.DataFrame:

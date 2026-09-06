@@ -7,6 +7,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.svm import SVR
 from sklearn.linear_model import LinearRegression
 from .preprocessing import DataPreprocessor
+from predict_ur_score.config import RANDOM_STATE
 
 
 class BaseModelPipeline(ABC):
@@ -35,13 +36,13 @@ class RandomForestPipeline(BaseModelPipeline):
     '''A class to create a Random Forest pipeline for predicting student scores.'''
 
     def create_model(self) -> RandomForestRegressor:
-        return RandomForestRegressor(n_estimators=100, random_state=42)
+        return RandomForestRegressor(n_estimators=100, random_state=RANDOM_STATE)
 
 class DecisionTreePipeline(BaseModelPipeline):
     '''A class to create a Decision Tree pipeline for predicting student scores.'''
 
     def create_model(self) -> DecisionTreeRegressor:
-        return DecisionTreeRegressor(random_state=42)
+        return DecisionTreeRegressor(random_state=RANDOM_STATE)
 
 class SVMPipeline(BaseModelPipeline):
     '''A class to create a Support Vector Machine (SVM) pipeline for predicting student scores.'''
