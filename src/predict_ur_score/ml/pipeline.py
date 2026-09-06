@@ -5,12 +5,11 @@ from sklearn.base import RegressorMixin
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.svm import SVR
-from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import LinearRegression
 from .preprocessing import DataPreprocessor
 
 
-class BaseModelPipeline:
+class BaseModelPipeline(ABC):
     '''A class to create a base pipeline for predicting student scores.'''
 
     def __init__(self) -> None:

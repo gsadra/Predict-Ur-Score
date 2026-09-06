@@ -10,12 +10,12 @@ class DataPreprocessor:
 
     def __init__(self) -> None:
         self.df: pd.DataFrame = load_data()
-        self.ohe: OneHotEncoder = OneHotEncoder(sparse=False, handle_unknown='ignore')
+        self.ohe: OneHotEncoder = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
         self.scaler: StandardScaler = StandardScaler()
 
     def transformer_pipeline(self) -> ColumnTransformer:
         categorical_features = self.df.select_dtypes(include=['str']).columns
-        numerical_features = self.df[['absence_days', 'weekly_self_study_hours']]
+        numerical_features = ['absence_days', 'weekly_self_study_hours']
 
         numerical_pipeline = Pipeline(steps=[
             ('scaler', self.scaler)

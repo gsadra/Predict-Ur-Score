@@ -2,7 +2,7 @@ import pandas as pd
 from pathlib import Path
 from predict_ur_score.exceptions import PredictorFileNotFound, PredictorInvalidData
 
-def load_data(path: str | Path ='../../../data/student-scores.csv', head: bool = False) -> pd.DataFrame:
+def load_data(path: str | Path ='data/student-scores.csv', head: bool = False) -> pd.DataFrame:
     '''
     Load data from a CSV file into a pandas DataFrame.
 

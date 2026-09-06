@@ -10,6 +10,7 @@ from .pipeline import (
 )
 from predict_ur_score.exceptions import PredictorInvalidModel
 from predict_ur_score.utils import load_data
+from .constants import TARGETS, BEST_MODEL_PARAMS
 
 
 class ModelTrainer:
@@ -22,35 +23,25 @@ class ModelTrainer:
         'linear_regression': LinearRegressionPipeline
     }
 
-    TARGETS = [
-        'math_score',
-        'history_score',
-        'physics_score',
-        'chemistry_score',
-        'biology_score',
-        'english_score',
-        'geography_score',
-    ] 
-
-    def __init__(self, model_type: str = 'random_forest', model_path: Path | None = None) -> None:
+    def __init__(self, model_type: str = 'random_forest', model_path: Path = Path('models/best_model.joblib')) -> None:
         self.data = load_data()
         self.model_type: str = model_type
-        self.model_path: Path = model_path
+        self.model_path: Path | None = model_path
         self.pipeline: Pipeline = self._select_pipeline()
 
-    def train_model(self) -> Pipeline:
+    def train_model(self) -> None:
         X, y = self._load_training_data()
         self.pipeline.fit(X, y)
 
         self.model_path.parent.mkdir(parents=True, exist_ok=True)
         joblib.dump(self.pipeline, self.model_path)
 
-        print(f'Model trained and saved at: {self.model_path}')
+        return self.pipeline
 
     
     def _load_training_data(self) -> tuple[pd.DataFrame, pd.DataFrame]:
-        X = self.data.drop(columns=self.TARGETS)
-        y = self.data[self.TARGETS]
+        X = self.data.drop(columns=TARGETS)
+        y = self.data[TARGETS]
 
         return X, y
 
@@ -60,8 +51,18 @@ class ModelTrainer:
                                        f'Choose from {list(self.MODEL_MAPPING.keys())}')
 
         pipeline_class = self.MODEL_MAPPING[self.model_type]
-        return pipeline_class().create_pipeline()
+        pipeline = pipeline_class().create_pipeline()
+
+        self._set_best_params(pipeline)
+
+        return pipeline
+
+    def _set_best_params(self, pipeline: Pipeline) -> None:
+        params = BEST_MODEL_PARAMS.get(self.model_type)
+
+        if params:
+            pipeline.set_params(**params)
 
 if __name__ == "__main__":
-    model_trainer = ModelTrainer(model_type='random_forest', model_path=Path('models/random_forest_model.joblib'))
+    model_trainer = ModelTrainer(model_type='random_forest', model_path=Path('models/best_model.joblib'))
     model_trainer.train_model()
