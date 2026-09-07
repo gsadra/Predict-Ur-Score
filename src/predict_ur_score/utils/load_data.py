@@ -1,10 +1,18 @@
-import pandas as pd
 from pathlib import Path
-from predict_ur_score.exceptions import PredictorFileNotFound, PredictorInvalidData
-from predict_ur_score.config import DATASET_PATH
 
-def load_data(path: str | Path = DATASET_PATH, head: bool = False) -> pd.DataFrame:
-    '''
+import pandas as pd
+
+from predict_ur_score.config import DATASET_PATH
+from predict_ur_score.exceptions import (
+    PredictorFileNotFound,
+    PredictorInvalidData,
+)
+
+
+def load_data(
+    path: str | Path = DATASET_PATH, head: bool = False
+) -> pd.DataFrame:
+    """
     Load data from a CSV file into a pandas DataFrame.
 
     Args:
@@ -13,7 +21,7 @@ def load_data(path: str | Path = DATASET_PATH, head: bool = False) -> pd.DataFra
 
     Returns:
         pandas.DataFrame: The loaded data as a pandas DataFrame.
-    '''
+    """
 
     try:
         df = _select_data(pd.read_csv(path))
@@ -23,13 +31,16 @@ def load_data(path: str | Path = DATASET_PATH, head: bool = False) -> pd.DataFra
         return df
 
     except FileNotFoundError:
-        raise PredictorFileNotFound(f'File not found at {path}')
-    
+        raise PredictorFileNotFound(f"File not found at {path}")
+
     except Exception as e:
-        raise PredictorInvalidData(f'Error loading data from {path}: {e}')
+        raise PredictorInvalidData(f"Error loading data from {path}: {e}")
+
 
 def _select_data(dataframe: pd.DataFrame) -> pd.DataFrame:
     df: pd.DataFrame = dataframe
-    df.drop(['id', 'first_name', 'last_name', 'email'], axis=1, inplace=True)
+    df.drop(
+        ["id", "first_name", "last_name", "email"], axis=1, inplace=True
+    )
 
     return df
