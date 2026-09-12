@@ -17,7 +17,7 @@ dependencies = [
 ]
 
 [project.scripts]
-predict-ur-score = "predict_ur_score:main"
+predict-ur-score = "predict_ur_score.__main__:main"
 
 [build-system]
 requires = ["uv_build>=0.12.5,<0.13.0"]
