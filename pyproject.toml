@@ -7,6 +7,7 @@ authors = [
     { name = "gsadra", email = "sadra.gholami2003@gmail.com" }
 ]
 requires-python = ">=3.14"
+license = "MIT"
 dependencies = [
     "joblib>=1.6.0",
     "numpy>=2.5.2",
