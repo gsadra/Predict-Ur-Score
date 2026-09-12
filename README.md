@@ -33,8 +33,8 @@ pip install uv
 Clone the project from Github:
 
 ```bash
-  git clone https://github.com/gsadra/Predict_Ur_Score.git
-  cd Predict_Ur_Score
+  git clone https://github.com/gsadra/Predict-Ur-Score.git
+  cd Predict-Ur-Score
 ```
 ### 3. Install dependencies
 
